@@ -38,11 +38,15 @@
 }
 
 .load-more {
-    display: block;
+    /* display: block; */
     width: 140px;
     height: 50px;
     margin-top: 30px;
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 60px;
+}
+
+.btn-box {
+    text-align: center;
 }
