@@ -8,8 +8,6 @@ import axios from "axios";
 const searchForm = document.querySelector('.js-form');
 const gallery = document.querySelector('.js-gallery');
 const loadMore = document.querySelector('.js-btn-more')
-// const jsSubmitBtn = document.querySelector('.js-submit-btn')
-// const jsInput = document.querySelector('.js-input');
 const API_KEY = "38304723-3ccc87e605612703ee79a288f";
 const BASE_URL = 'https://pixabay.com/api/'
 
@@ -28,7 +26,7 @@ async function onSubmit(e) {
   try {
     const images = await getImg(url);
     addMarkup(images.hits);
-    console.log(images.hits);
+    // console.log(images.hits);
     loadMore.hidden = false;
     if (images.totalHits === 0) {
       loadMore.hidden = true;
@@ -37,13 +35,13 @@ async function onSubmit(e) {
       } catch (error) {
     Notify.failure('Qui timide rogat docet negare');
   }
-  
-}
+  smoothScroll()
+  }
 
   async function getImg(url) {
     try {
       const response = await axios.get(url);
-      console.log(response.data.totalHits);
+      // console.log(response.data.totalHits);
     return response.data;
   } catch (error) {
     Notify.failure('Qui timide rogat docet negare');
@@ -86,13 +84,13 @@ async function onClick(e) {
   e.preventDefault();
   
   pageNumber += 1;
-  console.log(pageNumber);
+  // console.log(pageNumber);
   const searchValue = document.querySelector('.js-input').value;
   const url = `${BASE_URL}?key=${API_KEY}&q=${searchValue}&image_type=photo&orientation=horizontal&safesearch=true&page=${pageNumber}&per_page=40`;
 try {
     const images = await getImg(url);
     addMarkup(images.hits);
-  console.log(images.hits);
+  // console.log(images.hits);
   if ((pageNumber * 40) >= images.totalHits) {
     loadMore.hidden = true;
     Notify.info("We're sorry, but you've reached the end of search results.")
@@ -101,7 +99,23 @@ try {
   catch (error) {
     Notify.failure('Qui timide rogat docet negare');
   }
-     }
+  smoothScroll()
+}
+     
+function smoothScroll() {
+   const firstCard = gallery.firstElementChild;
+
+if (firstCard) {
+  const { height: cardHeight } = document
+  .querySelector(".gallery")
+  .firstElementChild.getBoundingClientRect();
+
+window.scrollBy({
+  top: cardHeight * 2,
+  behavior: "smooth",
+});
+}
+}
 
 
     
