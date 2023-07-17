@@ -12,3 +12,37 @@
 .search-button {
     font-size: 20px;
 }
+
+.gallery {
+    padding-top: 30px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+.photo-card {
+    height: 250px;
+    width: 300px;
+}
+
+.info {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+}
+
+.image {
+    height: 200px;
+    width: 300px;
+}
+
+.load-more {
+    display: block;
+    width: 140px;
+    height: 50px;
+    margin-top: 30px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 60px;
+}
