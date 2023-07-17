@@ -7,7 +7,18 @@
     <link rel="stylesheet" href="/src/css/styles.css" />
   </head>
   <body>
-    <div class="gallery">
+    <form class="js-form search-form" id="search-form">
+      <input
+        class="search-input js-input"
+        type="text"
+        name="searchQuery"
+        autocomplete="off"
+        placeholder="Search images..."
+      />
+      <button class="search-button" type="submit">Search</button>
+    </form>
+
+    <div class="gallery js-gallery">
       <!-- Картки зображень -->
     </div>
 
