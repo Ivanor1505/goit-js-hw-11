@@ -19,7 +19,7 @@ loadMore.addEventListener('click', onClick);
 
 async function onSubmit(e) {
   e.preventDefault();
-  
+  loadMore.hidden = true;
   gallery.innerHTML = '';
 
   const searchValue = document.querySelector('.js-input').value;
@@ -35,7 +35,7 @@ async function onSubmit(e) {
       Notify.warning('Sorry, there are no images matching your search query. Please try again.');
     }else{Notify.success(`Hooray! We found ${images.totalHits} images.`);}
       } catch (error) {
-    console.error(error);
+    Notify.failure('Qui timide rogat docet negare');
   }
   
 }
@@ -46,7 +46,7 @@ async function onSubmit(e) {
       console.log(response.data.totalHits);
     return response.data;
   } catch (error) {
-    console.error(error);
+    Notify.failure('Qui timide rogat docet negare');
     throw new Error("Sorry, there are no images matching your search query. Please try again.");
   }
     }
@@ -99,7 +99,7 @@ try {
       };
   }
   catch (error) {
-    console.error(error);
+    Notify.failure('Qui timide rogat docet negare');
   }
      }
 
