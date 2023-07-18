@@ -1,4 +1,6 @@
 // import SimpleLightbox from 'simplelightbox';
+// import 'simplelightbox/dist/simple-lightbox.min.css';
+
 // export function addMarkup(images) {
 //   const markup = images.map(image => 
 //   `<div class="photo-card">

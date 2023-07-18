@@ -4,12 +4,14 @@ import 'simplelightbox/dist/simple-lightbox.min.css';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import axios from "axios";
 
-
 const searchForm = document.querySelector('.js-form');
 const gallery = document.querySelector('.js-gallery');
-const loadMore = document.querySelector('.js-btn-more')
+const loadMore = document.querySelector('.js-btn-more');
+const jsInput = document.querySelector('.js-input');
 const API_KEY = "38304723-3ccc87e605612703ee79a288f";
-const BASE_URL = 'https://pixabay.com/api/'
+const BASE_URL = 'https://pixabay.com/api/';
+const perPage = 40;
+let pageNumber = 1;
 
 searchForm.addEventListener('submit', onSubmit);
 loadMore.addEventListener('click', onClick);
@@ -20,8 +22,10 @@ async function onSubmit(e) {
   loadMore.hidden = true;
   gallery.innerHTML = '';
 
-  const searchValue = document.querySelector('.js-input').value;
-  const url = `${BASE_URL}?key=${API_KEY}&q=${searchValue}&image_type=photo&orientation=horizontal&safesearch=true&page=1&per_page=40`;
+  const searchValue = getSearchValue();
+  const url = `${BASE_URL}?key=${API_KEY}&q=${searchValue}
+  &image_type=photo&orientation=horizontal&safesearch=true
+  &page=${pageNumber}&per_page=${perPage}`;
   
   try {
     const images = await getImg(url);
@@ -36,9 +40,35 @@ async function onSubmit(e) {
     Notify.failure('Qui timide rogat docet negare');
   }
   smoothScroll()
-  }
+};
+  
 
-  async function getImg(url) {
+async function onClick(e) {
+  e.preventDefault();
+    pageNumber += 1;
+  // console.log(pageNumber);
+  const searchValue = getSearchValue();
+  const url = `${BASE_URL}?key=${API_KEY}&q=${searchValue}
+  &image_type=photo&orientation=horizontal&safesearch=true
+  &page=${pageNumber}&per_page=40`;
+
+  try {
+    const images = await getImg(url);
+    addMarkup(images.hits);
+  // console.log(images.hits);
+  if ((pageNumber * 40) >= images.totalHits) {
+    loadMore.hidden = true;
+    Notify.info("We're sorry, but you've reached the end of search results.")
+      };
+  }
+  catch (error) {
+    Notify.failure('Qui timide rogat docet negare');
+  }
+  smoothScroll()
+};
+
+
+async function getImg(url) {
     try {
       const response = await axios.get(url);
       // console.log(response.data.totalHits);
@@ -47,9 +77,13 @@ async function onSubmit(e) {
     Notify.failure('Qui timide rogat docet negare');
     throw new Error("Sorry, there are no images matching your search query. Please try again.");
   }
-    }
+};
   
-  
+
+ function getSearchValue() {
+  return jsInput.value;
+}; 
+
 
 function addMarkup(images) {
   const markup = images.map(image => 
@@ -78,30 +112,7 @@ function addMarkup(images) {
   lightbox.refresh();
 };
 
-let pageNumber = 1;
 
-async function onClick(e) {
-  e.preventDefault();
-  
-  pageNumber += 1;
-  // console.log(pageNumber);
-  const searchValue = document.querySelector('.js-input').value;
-  const url = `${BASE_URL}?key=${API_KEY}&q=${searchValue}&image_type=photo&orientation=horizontal&safesearch=true&page=${pageNumber}&per_page=40`;
-try {
-    const images = await getImg(url);
-    addMarkup(images.hits);
-  // console.log(images.hits);
-  if ((pageNumber * 40) >= images.totalHits) {
-    loadMore.hidden = true;
-    Notify.info("We're sorry, but you've reached the end of search results.")
-      };
-  }
-  catch (error) {
-    Notify.failure('Qui timide rogat docet negare');
-  }
-  smoothScroll()
-}
-     
 function smoothScroll() {
    const firstCard = gallery.firstElementChild;
 
@@ -115,9 +126,4 @@ window.scrollBy({
   behavior: "smooth",
 });
 }
-}
-
-
-    
-
-
+};
