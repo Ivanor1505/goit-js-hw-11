@@ -33,10 +33,10 @@ async function onSubmit(e) {
     addMarkup(images.hits);
     // console.log(images.hits);
     loadMore.hidden = false;
-    if (images.totalHits === 0) {
+    if (images.totalHits === 0 || images.totalHits <= perPage) {
       loadMore.hidden = true;
       Notify.warning('Sorry, there are no images matching your search query. Please try again.');
-    }else{Notify.success(`Hooray! We found ${images.totalHits} images.`);}
+    }else{ Notify.success(`Hooray! We found ${images.totalHits} images.`); }
       } catch (error) {
     Notify.failure('Qui timide rogat docet negare');
   }
