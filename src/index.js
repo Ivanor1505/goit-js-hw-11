@@ -21,6 +21,7 @@ async function onSubmit(e) {
   e.preventDefault();
   loadMore.hidden = true;
   gallery.innerHTML = '';
+  pageNumber = 1;
 
   const searchValue = getSearchValue();
   const url = `${BASE_URL}?key=${API_KEY}&q=${searchValue}
