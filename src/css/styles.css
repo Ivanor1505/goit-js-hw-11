@@ -1,3 +1,9 @@
+body {
+    background-image: linear-gradient(to bottom,
+            blue,
+            yellow);
+}
+
 .search-form {
     text-align: center;
     background-color: blue;
